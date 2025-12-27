@@ -67,6 +67,11 @@ export const GazeProvider = ({ children }) => {
     }
 
     // 2. Start Webcam
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+      console.warn("Camera API not available. Ensure you are on HTTPS or localhost.");
+      return;
+    }
+
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ video: true });
       streamRef.current = stream;
