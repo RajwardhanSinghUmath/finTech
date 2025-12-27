@@ -104,6 +104,14 @@ function CalibrateContent() {
                     </p>
                 </div>
             )}
+            {/* Skip Button */}
+            <button
+                onClick={() => window.location.href = "/checkout"}
+                className="fixed bottom-48 right-8 z-[100] bg-white text-black px-6 py-4 rounded-xl text-[12px] font-black uppercase tracking-[0.2em] hover:bg-gray-200 transition-colors flex items-center gap-2 group shadow-lg"
+            >
+                Skip Calibration
+                <span className="group-hover:translate-x-1 transition-transform">→</span>
+            </button>
         </div>
     );
 }
