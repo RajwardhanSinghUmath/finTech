@@ -8,8 +8,10 @@ export const GazeProvider = ({ children }) => {
   const [isMouseSim, setIsMouseSim] = useState(false);
   const [isModelLoaded, setIsModelLoaded] = useState(false);
   const [webcamStream, setWebcamStream] = useState(null);
+  const [hasConsent, setHasConsent] = useState(true);
+  const [isInitialized, setIsInitialized] = useState(false);
 
-
+  const isMouseSimRef = useRef(false);
   const videoRef = useRef(null);
   const faceLandmarkerRef = useRef(null);
   const requestRef = useRef(null);
@@ -18,6 +20,32 @@ export const GazeProvider = ({ children }) => {
   const lastTimestampRef = useRef(-1);
   const prevGazeRef = useRef({ x: 0, y: 0 });
 
+  useEffect(() => {
+    isMouseSimRef.current = isMouseSim;
+  }, [isMouseSim]);
+
+  useEffect(() => {
+    const consent = localStorage.getItem('gaze-consent');
+    if (consent === 'false') {
+      setHasConsent(false);
+      setIsMouseSim(true);
+      isMouseSimRef.current = true;
+    }
+    setIsInitialized(true);
+  }, []);
+
+
+  const updateConsent = (val) => {
+    localStorage.setItem('gaze-consent', val ? 'true' : 'false');
+    setHasConsent(val);
+    if (!val) {
+      setIsMouseSim(true);
+      isMouseSimRef.current = true;
+    } else {
+      setIsMouseSim(false);
+      isMouseSimRef.current = false;
+    }
+  };
 
   useEffect(() => {
     if (isMouseSim) {
@@ -26,25 +54,28 @@ export const GazeProvider = ({ children }) => {
       };
       window.addEventListener('mousemove', handleMouseMove);
 
-
       return () => {
         window.removeEventListener('mousemove', handleMouseMove);
-        stopEyeTracking();
+        // We only stop eye tracking if we're moving away from mouse sim
+        // but actually handled by the other useEffect
       };
     }
   }, [isMouseSim]);
 
-
   useEffect(() => {
+    if (!isInitialized) return;
     if (!isMouseSim) {
       startEyeTracking();
+    } else {
+      stopEyeTracking();
     }
     return () => {
       stopEyeTracking();
     };
-  }, [isMouseSim]);
+  }, [isMouseSim, isInitialized]);
 
   const startEyeTracking = async () => {
+    if (isMouseSimRef.current) return;
 
     if (!faceLandmarkerRef.current) {
       try {
@@ -91,6 +122,7 @@ export const GazeProvider = ({ children }) => {
       if (err.name === 'NotAllowedError') {
         console.warn("Camera permission denied. Falling back to mouse simulation.");
         setIsMouseSim(true);
+        isMouseSimRef.current = true;
       }
     }
   };
@@ -207,13 +239,13 @@ export const GazeProvider = ({ children }) => {
       }
     }
 
-    if (!isMouseSim) {
+    if (!isMouseSimRef.current) {
       requestRef.current = requestAnimationFrame(predictWebcam);
     }
   };
 
   return (
-    <GazeContext.Provider value={{ gaze, isMouseSim, setIsMouseSim, isModelLoaded, webcamStream, stopEyeTracking }}>
+    <GazeContext.Provider value={{ gaze, isMouseSim, setIsMouseSim, isModelLoaded, webcamStream, stopEyeTracking, hasConsent, updateConsent }}>
       {children}
 
 

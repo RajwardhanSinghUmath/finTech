@@ -13,7 +13,7 @@ const CartDrawer = ({ isOpen, onClose, cartItems, onRemoveItem, onUpdateQuantity
     setIsCheckingOut(true);
     // Mock checkout process and redirect
     setTimeout(() => {
-      router.replace("/checkout");
+      router.replace("/privacy");
     }, 1000);
   };
 

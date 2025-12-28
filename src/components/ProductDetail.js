@@ -49,7 +49,7 @@ const ProductDetail = ({ onAddToCart }) => {
 
         <div className="p-6 md:p-12 lg:p-20 flex flex-col justify-center max-w-2xl">
           <button
-            onClick={() => router.push('/e-com')}
+            onClick={() => router.push('/')}
             className="text-xs font-bold uppercase tracking-widest text-gray-500 mb-8 hover:text-black self-start flex items-center gap-2"
           >
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">

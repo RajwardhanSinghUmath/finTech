@@ -8,22 +8,19 @@ import { useRouter } from 'next/navigation.js';
 
 const GazeDebugger = ({ zones }) => {
   const router = useRouter();
-  const { gaze, isMouseSim, setIsMouseSim } = useGaze();
+  const { gaze, isMouseSim, setIsMouseSim, hasConsent } = useGaze();
   const isEyeTracking = !isMouseSim;
   const setIsEyeTracking = (track) => setIsMouseSim(!track);
   const confusion = useConfusionDetector(zones);
 
   const isMobile = useMediaQuery({ query: '(max-width: 768px)' });
 
-  // Accessibility: Keyboard shortcuts
   useEffect(() => {
     const handleKeyPress = (e) => {
-      // Press '?' to toggle help (placeholder)
       if (e.key === '?') {
         e.preventDefault();
         console.log('Help shortcut triggered');
       }
-      // Press 'T' to toggle tracking mode
       if (e.key === 'T' || e.key === 't') {
         setIsEyeTracking(!isEyeTracking);
       }
@@ -33,7 +30,6 @@ const GazeDebugger = ({ zones }) => {
     return () => window.removeEventListener('keydown', handleKeyPress);
   }, [isEyeTracking, setIsEyeTracking]);
 
-  // Dynamic Styles based on state
   const theme = {
     color: confusion.isConfused ? 'text-rose-500' : 'text-emerald-400',
     border: confusion.isConfused ? 'border-rose-500' : 'border-emerald-400',
@@ -41,7 +37,6 @@ const GazeDebugger = ({ zones }) => {
     glow: confusion.isConfused ? 'shadow-[0_0_30px_rgba(244,63,94,0.6)]' : 'shadow-[0_0_20px_rgba(52,211,153,0.4)]',
   };
 
-  // Hide default cursor when simulating with mouse
   useEffect(() => {
     if (isMouseSim) {
       document.body.style.cursor = 'none';
@@ -56,20 +51,18 @@ const GazeDebugger = ({ zones }) => {
   return (
     <>
       <div
-        className="fixed pointer-events-none z-[9999] transition-transform duration-75 ease-out will-change-transform"
+        className="fixed pointer-events-none z-9999 transition-transform duration-75 ease-out will-change-transform"
         style={{
           left: gaze.x,
           top: gaze.y,
           transform: 'translate(-50%, -50%)',
         }}
       >
-        {/* Outer Ring (Expands/Pulses when confused) */}
         <div
           className={`absolute inset-0 w-12 h-12 -ml-2 -mt-2 rounded-full border-2 opacity-60 
             ${theme.border} ${confusion.isConfused ? 'animate-ping' : 'scale-100'} transition-colors duration-300`}
         />
 
-        {/* Inner Crosshair / Dot */}
         <div className={`w-8 h-8 rounded-full border border-white/30 backdrop-blur-sm flex items-center justify-center ${theme.glow}`}>
           <div className={`w-2 h-2 rounded-full ${theme.bg}`} />
         </div>
@@ -104,7 +97,7 @@ const GazeDebugger = ({ zones }) => {
         )
         :
         (
-          <div className="fixed bottom-6 right-6 w-80 bg-slate-900/80 backdrop-blur-xl border border-slate-700/50 shadow-2xl rounded-2xl overflow-hidden font-sans z-[10000] text-slate-200">
+          <div className="fixed bottom-6 right-6 w-80 bg-slate-900/80 backdrop-blur-xl border border-slate-700/50 shadow-2xl rounded-2xl overflow-hidden font-sans z-10000 text-slate-200">
 
             {/* Header */}
             <div className="bg-slate-800/50 px-4 py-3 border-b border-slate-700/50 flex justify-between items-center">
@@ -131,9 +124,10 @@ const GazeDebugger = ({ zones }) => {
                 </div>
 
                 <button
-                  onClick={() => setIsEyeTracking(!isEyeTracking)}
+                  onClick={() => hasConsent && setIsEyeTracking(!isEyeTracking)}
+                  disabled={!hasConsent}
                   className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-slate-900 ${isEyeTracking ? 'bg-purple-600' : 'bg-slate-600'
-                    }`}
+                    } ${!hasConsent ? 'opacity-50 cursor-not-allowed' : ''}`}
                 >
                   <span
                     className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform duration-200 shadow-sm ${isEyeTracking ? 'translate-x-6' : 'translate-x-1'
