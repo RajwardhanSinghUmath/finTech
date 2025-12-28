@@ -2,7 +2,7 @@
 
 import React, { useEffect, useRef, useCallback } from 'react';
 
-const CheckoutForm = ({ onZonesReady, confusion, onPay, onBack, cart = [], totals = { subtotal: 0, tax: 0, serviceFee: 0, total: 0 } }) => {
+const CheckoutForm = ({ onZonesReady, confusion, onPay, onBack, cart = [], totals = { subtotal: 0, tax: 0, serviceFee: 0, total: 0 }, stopEyeTracking }) => {
   const priceRef = useRef(null);
   const termsRef = useRef(null);
   const payRef = useRef(null);
@@ -94,7 +94,7 @@ const CheckoutForm = ({ onZonesReady, confusion, onPay, onBack, cart = [], total
                 I agree to the <span className="text-blue-600 underline">Terms</span>, including the non-refundable processing fee of <span className="text-black">${serviceFee.toFixed(2)}</span>, plus 10% estimated tax, and automated renewal.
               </span>
             </label>
-          
+
           </div>
         </div>
 
@@ -157,7 +157,13 @@ const CheckoutForm = ({ onZonesReady, confusion, onPay, onBack, cart = [], total
             <button
               onClick={(e) => {
                 e.preventDefault();
-                onPay?.();
+                // Turn off camera before processing order
+                if (stopEyeTracking) {
+                  stopEyeTracking();
+                }
+                if (onPay) {
+                  onPay();
+                }
               }}
               ref={payRef}
               id="pay-button"

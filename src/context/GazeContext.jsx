@@ -88,6 +88,10 @@ export const GazeProvider = ({ children }) => {
       }
     } catch (err) {
       console.error("Error accessing webcam:", err);
+      if (err.name === 'NotAllowedError') {
+        console.warn("Camera permission denied. Falling back to mouse simulation.");
+        setIsMouseSim(true);
+      }
     }
   };
 

@@ -200,11 +200,11 @@ const SuccessApp = () => {
         const { error } = await saveSession(sessionData);
 
         if (!error) {
-            router.replace('/checkout');
+            router.push('/');
         } else {
             console.error("Database error:", error);
 
-            router.replace('/checkout');
+            router.push('/');
         }
     };
 
@@ -282,6 +282,7 @@ const SuccessApp = () => {
                             onBack={handleBack}
                             cart={cart}
                             totals={totals}
+                            stopEyeTracking={stopEyeTracking}
                         />
 
                         <GazeDebugger zones={zones} />
