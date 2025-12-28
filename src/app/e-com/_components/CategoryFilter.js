@@ -20,7 +20,7 @@ const CategoryFilter = ({ activeSlug, onSelectCategory }) => {
   }, [activeSlug]);
 
   return (
-    <div className="sticky top-16 z-30 bg-white/10 backdrop-blur-sm border-b border-gray-200">
+    <div className="sticky top-16 z-30 bg-white/95 backdrop-blur-sm border-b border-gray-200">
       <div 
         ref={containerRef}
         className="flex overflow-x-auto no-scrollbar py-4 px-4 md:px-6 gap-3 md:gap-4"

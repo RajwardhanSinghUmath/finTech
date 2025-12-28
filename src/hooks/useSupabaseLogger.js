@@ -11,6 +11,7 @@ export const useSupabaseLogger = () => {
           converted: sessionData.converted,
           confusion_events: sessionData.confusionEvents,
           gaze_points: sessionData.gazePoints,
+          help_shown: sessionData.helpShown,
         },
       ]);
 

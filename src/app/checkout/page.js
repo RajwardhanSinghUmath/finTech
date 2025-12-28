@@ -16,7 +16,7 @@ async function getGroqChatCompletion(messages) {
 
 const SuccessApp = () => {
     const router = useRouter();
-    const { gaze } = useGaze();
+    const { gaze, stopEyeTracking } = useGaze();
     const { saveSession } = useSupabaseLogger();
 
     const [needHelp, setNeedHelp] = useState(false);
@@ -193,7 +193,8 @@ const SuccessApp = () => {
             duration: Math.floor((Date.now() - startTime.current) / 1000),
             converted: true,
             confusionEvents: confusionLogs,
-            gazePoints: gazeHistory
+            gazePoints: gazeHistory,
+            helpShown: messages.length > 0
         };
 
         const { error } = await saveSession(sessionData);
@@ -213,15 +214,17 @@ const SuccessApp = () => {
             duration: Math.floor((Date.now() - startTime.current) / 1000),
             converted: false,
             confusionEvents: confusionLogs,
-            gazePoints: gazeHistory
+            gazePoints: gazeHistory,
+            helpShown: messages.length > 0
         };
 
         await saveSession(sessionData);
+        stopEyeTracking();
         router.push('/');
     };
 
     return (
-        <section className="relative w-full h-screen bg-white overflow-hidden selection:bg-blue-500">
+        <section className="relative w-full h-screen bg-white selection:bg-blue-500">
             <div className="absolute inset-0 z-0 pointer-events-none">
                 <video
                     src="/Planet_Video.mp4"
@@ -235,11 +238,23 @@ const SuccessApp = () => {
                 <div className="absolute inset-0 bg-black/10" />
             </div>
 
-            <div className={`relative z-10 w-full h-full transition-all duration-500 overflow-hidden ${needHelp ? 'pr-0 sm:pr-[35%] lg:pr-[28%]' : ''}`}>
-                <div className="h-full w-full flex flex-col items-center justify-center p-4">
+            {/* Recalibrate Button */}
+            <button
+                onClick={() => {
+                    stopEyeTracking();
+                    router.push('/calibrate');
+                }}
+                className="fixed bg-white/95 backdrop-blur-md text-gray-600 rounded-full shadow-2xl hover:bg-gray-100 transition-all transform hover:-translate-y-1 font-black text-[10px] uppercase tracking-widest border border-gray-100 z-30 flex items-center gap-2 p-2 top-4 left-4 md:px-6 md:py-3 md:top-8 md:left-8"
+            >
+                <span className="text-sm">🎯</span>
+                <span className="hidden md:inline">Recalibrate</span>
+            </button>
 
-                    <div className="mb-4 text-center bg-white/10  p-4 rounded-3xl shadow-xl border border-white/50 w-full max-w-4xl transform hover:scale-[1.01] transition-transform flex justify-between items-center text-black">
-                        <button onClick={handleBack} className="text-xs font-black uppercase tracking-[0.2em] text-gray-500 hover:text-blue-600 transition-colors">
+            <div className={`relative z-10 w-full h-full transition-all duration-500 overflow-y-auto lg:overflow-hidden ${needHelp ? 'pr-0 sm:pr-[35%] lg:pr-[28%]' : ''}`}>
+                <div className="min-h-full w-full flex flex-col items-center justify-start lg:justify-center p-2 md:p-4 lg:p-8">
+
+                    <div className="mb-4 md:mb-8 text-center bg-white/70 backdrop-blur-md p-4 md:p-6 rounded-2xl md:rounded-3xl shadow-xl border border-white/50 w-full max-w-4xl transform hover:scale-[1.01] transition-transform flex flex-col md:flex-row justify-between items-center gap-3 md:gap-0 text-black">
+                        <button onClick={handleBack} className="text-[10px] md:text-xs font-black uppercase tracking-[0.2em] text-gray-500 hover:text-blue-600 transition-colors">
                             ← Back to Store
                         </button>
                         <div className="flex flex-col items-center">
@@ -247,13 +262,13 @@ const SuccessApp = () => {
                                 <div className="w-6 h-6 bg-blue-600 rounded-full flex items-center justify-center shadow-lg">
                                     <span className="text-white font-bold text-[10px]">CG</span>
                                 </div>
-                                <h1 className="text-2xl font-black tracking-tighter uppercase italic">The Clarity Guardian</h1>
+                                <h1 className="text-xl md:text-2xl font-black tracking-tighter uppercase italic">The Clarity Guardian</h1>
                             </div>
                             <p className="text-gray-400 text-[10px] font-bold uppercase tracking-widest leading-none">Intelligent Secure Terminal</p>
                         </div>
-                        <div className="flex items-center gap-3 bg-white/50 px-3 py-1.5 rounded-full border border-gray-100">
+                        <div className="flex items-center gap-2 md:gap-3 bg-white/50 px-2 md:px-3 py-1.5 rounded-full border border-gray-100">
                             <span className={`w-2 h-2 rounded-full ${confusion.isConfused ? 'bg-yellow-400 animate-pulse' : 'bg-blue-500'}`}></span>
-                            <span className="text-[9px] font-black uppercase tracking-widest text-gray-500">
+                            <span className="text-[8px] md:text-[9px] font-black uppercase tracking-widest text-gray-500">
                                 {confusion.isConfused ? 'Friction Detected' : 'Gaze Stable'}
                             </span>
                         </div>
@@ -275,13 +290,13 @@ const SuccessApp = () => {
                     {!needHelp && (
                         <button
                             onClick={() => setNeedHelp(true)}
-                            className="fixed top-8 right-8 bg-white/10  text-blue-600 px-8 py-4 rounded-full shadow-2xl hover:bg-blue-600 hover:text-white transition-all transform hover:-translate-y-1 font-black text-xs uppercase tracking-widest border border-blue-100 flex items-center gap-3 z-30"
+                            className="fixed bg-white/10 backdrop-blur-md text-blue-600 rounded-full shadow-2xl hover:bg-blue-600 hover:text-white transition-all transform hover:-translate-y-1 font-black text-xs uppercase tracking-widest border border-blue-100 flex items-center gap-3 z-30 p-3 top-4 right-4 md:px-8 md:py-4 md:top-8 md:right-8"
                         >
                             <span className="relative flex h-3 w-3">
                                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
                                 <span className="relative inline-flex rounded-full h-3 w-3 bg-blue-600"></span>
                             </span>
-                            Connect with AI Assistant
+
                         </button>
                     )}
 
@@ -339,7 +354,7 @@ const SuccessApp = () => {
                         </button>
                     </div>
 
-                    <div className="flex-1 overflow-y-auto p-8 space-y-6 scrollbar-hide">
+                    <div className="flex-1 overflow-y-auto p-8 space-y-6">
                         {messages.length === 0 && (
                             <div className="h-full flex flex-col items-center justify-center text-center space-y-4 opacity-30">
                                 <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center text-2xl">🤖</div>

@@ -51,19 +51,32 @@ function CalibrateContent() {
         }
     }, [points]);
 
+    const [isMobile, setIsMobile] = useState(false);
+
+    useEffect(() => {
+        const checkMobile = () => setIsMobile(window.innerWidth < 768);
+        checkMobile();
+        window.addEventListener('resize', checkMobile);
+        return () => window.removeEventListener('resize', checkMobile);
+    }, []);
+
     const getPosition = (id) => {
+        const margin = isMobile ? '20px' : '40px';
+        const topMargin = isMobile ? '80px' : '40px';
+        const cornerOffset = isMobile ? '20px' : '220px';
+
         switch (id) {
-            case 'tl': return { top: '40px', left: '220px' };
-            case 'tc': return { top: '40px', left: '50%', transform: 'translateX(-50%)' };
-            case 'tr': return { top: '40px', right: '40px' };
+            case 'tl': return { top: isMobile ? '60px' : topMargin, left: isMobile ? '10px' : cornerOffset };
+            case 'tc': return { top: topMargin, left: '50%', transform: 'translateX(-50%)' };
+            case 'tr': return { top: topMargin, right: margin };
 
-            case 'cl': return { top: '50%', left: '40px', transform: 'translateY(-50%)' };
+            case 'cl': return { top: '50%', left: margin, transform: 'translateY(-50%)' };
             case 'cc': return { top: '50%', left: '50%', transform: 'translate(-50%, -50%)' };
-            case 'cr': return { top: '50%', right: '40px', transform: 'translateY(-50%)' };
+            case 'cr': return { top: '50%', right: margin, transform: 'translateY(-50%)' };
 
-            case 'bl': return { bottom: '40px', left: '40px' };
-            case 'bc': return { bottom: '40px', left: '50%', transform: 'translateX(-50%)' };
-            case 'br': return { bottom: '40px', right: '350px' };
+            case 'bl': return { bottom: margin, left: margin };
+            case 'bc': return { bottom: margin, left: '50%', transform: 'translateX(-50%)' };
+            case 'br': return { bottom: isMobile ? '50px' : margin, right: isMobile ? '50px' : (isMobile ? margin : '350px') };
             default: return {};
         }
     };
@@ -82,7 +95,7 @@ function CalibrateContent() {
             <GazeDebugger zones={[]} />
 
             {/* Camera Feed */}
-            <div className="absolute top-4 left-4 w-48 h-36 rounded-xl overflow-hidden border-2 border-white/20 shadow-2xl z-40 pointer-events-none bg-black/50 backdrop-blur-sm">
+            <div className="absolute top-2 left-2 md:top-4 md:left-4 w-32 h-24 md:w-48 md:h-36 rounded-xl overflow-hidden border-2 border-white/20 shadow-2xl z-40 pointer-events-none bg-black/50 backdrop-blur-sm">
                 <video
                     ref={videoRef}
                     autoPlay
@@ -128,7 +141,7 @@ function CalibrateContent() {
             )}
             <button
                 onClick={() => window.location.href = "/checkout"}
-                className="fixed bottom-48 right-8 z-[100] bg-white text-black px-6 py-4 rounded-xl text-[12px] font-black uppercase tracking-[0.2em] hover:bg-gray-200 transition-colors flex items-center gap-2 group shadow-lg"
+                className="fixed bottom-8 right-4 md:bottom-48 md:right-8 z-[100] bg-white text-black px-4 py-3 md:px-6 md:py-4 rounded-xl text-[10px] md:text-[12px] font-black uppercase tracking-[0.2em] hover:bg-gray-200 transition-colors flex items-center gap-2 group shadow-lg"
             >
                 Skip Calibration
                 <span className="group-hover:translate-x-1 transition-transform">→</span>

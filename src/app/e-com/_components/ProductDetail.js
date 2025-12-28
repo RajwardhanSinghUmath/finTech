@@ -1,7 +1,7 @@
 "use client"
 import React, { useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
-
+import { Product } from './types';
 import { PRODUCTS } from './constants';
 
 const ProductDetail = ({ onAddToCart }) => {
@@ -39,14 +39,16 @@ const ProductDetail = ({ onAddToCart }) => {
   return (
     <div className="animate-fade-in min-h-screen bg-white">
       <div className="grid grid-cols-1 lg:grid-cols-2">
+        {/* Image Section */}
         <div className="bg-gray-50 relative aspect-square lg:aspect-auto lg:h-[calc(100vh-64px)] overflow-hidden">
           <img
             src={product.image}
             alt={product.name}
-            className="w-90% h-90% object-cover object-center hover:scale-105 transition-transform duration-700"
+            className="w-full h-full object-cover object-center hover:scale-105 transition-transform duration-700"
           />
         </div>
 
+        {/* Details Section */}
         <div className="p-6 md:p-12 lg:p-20 flex flex-col justify-center max-w-2xl">
           <button
             onClick={() => router.push('/e-com')}

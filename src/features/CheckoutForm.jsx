@@ -43,35 +43,35 @@ const CheckoutForm = ({ onZonesReady, confusion, onPay, onBack, cart = [], total
 
   return (
     <div className="relative text-black bg-transparent text-black rounded-[2.3rem] shadow-2xl overflow-hidden border border-gray-100">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-0">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-0">
 
-        <div className="p-6 space-y-4 border-r border-gray-100">
+        <div className="p-6 space-y-4 border-b lg:border-b-0 lg:border-r border-gray-100">
           <header className="flex justify-between items-start">
             <div className="text-right">
-              <h2 className="text-3xl font-black tracking-tighter italic uppercase text-gray-900 leading-none">Payment</h2>
-              <p className="text-gray-400 text-[10px] font-bold uppercase tracking-[0.2em] mt-2">Secure Terminal 01</p>
+              <h2 className="text-2xl md:text-3xl font-black tracking-tighter italic uppercase text-gray-900 leading-none">Payment</h2>
+              <p className="text-gray-400 text-[8px] md:text-[10px] font-bold uppercase tracking-[0.2em] mt-2">Secure Terminal 01</p>
             </div>
           </header>
 
           <div className="space-y-4">
             <div className="space-y-1">
-              <label className="text-[10px] font-bold text-black uppercase tracking-widest ml-1">Cardholder Name</label>
-              <input type="text" placeholder="JOHN DOE" className="w-full p-3 bg-gray-50 border border-gray-100 rounded-2xl focus:ring-2 focus:ring-blue-600 outline-none font-bold text-sm placeholder:text-gray-200 transition-all" />
+              <label className="text-[8px] md:text-[10px] font-bold text-black uppercase tracking-widest ml-1">Cardholder Name</label>
+              <input type="text" placeholder="JOHN DOE" className="w-full p-3 bg-gray-50 border border-gray-100 rounded-2xl focus:ring-2 focus:ring-blue-600 outline-none font-bold text-xs md:text-sm placeholder:text-gray-200 transition-all" />
             </div>
 
             <div className="space-y-1">
-              <label className="text-[10px] font-bold text-black uppercase tracking-widest ml-1">Card Number</label>
-              <input type="text" placeholder="0000 0000 0000 0000" className="w-full p-3 bg-gray-50 border border-gray-100 rounded-2xl focus:ring-2 focus:ring-blue-600 outline-none font-bold text-sm placeholder:text-gray-200 transition-all" />
+              <label className="text-[8px] md:text-[10px] font-bold text-black uppercase tracking-widest ml-1">Card Number</label>
+              <input type="text" placeholder="0000 0000 0000 0000" className="w-full p-3 bg-gray-50 border border-gray-100 rounded-2xl focus:ring-2 focus:ring-blue-600 outline-none font-bold text-xs md:text-sm placeholder:text-gray-200 transition-all" />
             </div>
 
             <div className="flex gap-4">
               <div className="w-1/2 space-y-1">
-                <label className="text-[10px] font-bold text-black uppercase tracking-widest ml-1">Expiry</label>
-                <input type="text" placeholder="MM/YY" className="w-full p-3 bg-gray-50 border border-gray-100 rounded-2xl focus:ring-2 focus:ring-blue-600 outline-none font-bold text-sm" />
+                <label className="text-[8px] md:text-[10px] font-bold text-black uppercase tracking-widest ml-1">Expiry</label>
+                <input type="text" placeholder="MM/YY" className="w-full p-3 bg-gray-50 border border-gray-100 rounded-2xl focus:ring-2 focus:ring-blue-600 outline-none font-bold text-xs md:text-sm" />
               </div>
               <div className="w-1/2 space-y-1">
-                <label className="text-[10px] font-bold text-black uppercase tracking-widest ml-1">CVC</label>
-                <input type="text" placeholder="123" className="w-full p-3 bg-gray-50 border border-gray-100 rounded-2xl focus:ring-2 focus:ring-blue-600 outline-none font-bold text-sm" />
+                <label className="text-[8px] md:text-[10px] font-bold text-black uppercase tracking-widest ml-1">CVC</label>
+                <input type="text" placeholder="123" className="w-full p-3 bg-gray-50 border border-gray-100 rounded-2xl focus:ring-2 focus:ring-blue-600 outline-none font-bold text-xs md:text-sm" />
               </div>
             </div>
           </div>
@@ -94,14 +94,15 @@ const CheckoutForm = ({ onZonesReady, confusion, onPay, onBack, cart = [], total
                 I agree to the <span className="text-blue-600 underline">Terms</span>, including the non-refundable processing fee of <span className="text-black">${serviceFee.toFixed(2)}</span>, plus 10% estimated tax, and automated renewal.
               </span>
             </label>
+          
           </div>
         </div>
 
-        <div className="bg-gray-50/50 p-6 flex flex-col justify-between rounded-r-[2.3rem]">
+        <div className="bg-gray-50/50 p-6 flex flex-col justify-between lg:rounded-r-[2.3rem]">
           <div className="space-y-10">
             <div className="flex justify-between items-center">
-              <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-400">Order Summary</h3>
-              <span className="bg-gray-200 text-[10px] font-bold px-2 py-1 rounded text-gray-600">{cart.length} ITEMS</span>
+              <h3 className="text-[8px] md:text-[10px] font-black uppercase tracking-[0.2em] text-gray-400">Order Summary</h3>
+              <span className="bg-gray-200 text-[8px] md:text-[10px] font-bold px-2 py-1 rounded text-gray-600">{cart.length} ITEMS</span>
             </div>
 
             <div
@@ -112,22 +113,22 @@ const CheckoutForm = ({ onZonesReady, confusion, onPay, onBack, cart = [], total
               {cart.map((item, index) => (
                 <div key={index} className="flex justify-between items-center group">
                   <div className="flex flex-col">
-                    <span className="text-xs font-bold text-gray-500 uppercase tracking-wider">{item.name}</span>
-                    <span className="text-[9px] text-gray-300 font-bold uppercase tracking-widest">Qty: {item.quantity}</span>
+                    <span className="text-[10px] md:text-xs font-bold text-gray-500 uppercase tracking-wider">{item.name}</span>
+                    <span className="text-[8px] md:text-[9px] text-gray-300 font-bold uppercase tracking-widest">Qty: {item.quantity}</span>
                   </div>
-                  <span className="font-black text-sm text-gray-900">${(item.price * item.quantity).toFixed(2)}</span>
+                  <span className="font-black text-xs md:text-sm text-gray-900">${(item.price * item.quantity).toFixed(2)}</span>
                 </div>
               ))}
 
               <div className="w-full h-px bg-gray-100 my-4" />
 
               <div className="flex justify-between items-center">
-                <span className="text-xs font-bold text-gray-500 uppercase tracking-wider">Subtotal</span>
-                <span className="font-black text-sm text-gray-900">${subtotal.toFixed(2)}</span>
+                <span className="text-[10px] md:text-xs font-bold text-gray-500 uppercase tracking-wider">Subtotal</span>
+                <span className="font-black text-xs md:text-sm text-gray-900">${subtotal.toFixed(2)}</span>
               </div>
               <div className="flex justify-between items-center">
                 <div className="flex items-center gap-2">
-                  <span className="text-xs font-bold text-gray-500 uppercase tracking-wider">Service Fee</span>
+                  <span className="text-[10px] md:text-xs font-bold text-gray-500 uppercase tracking-wider">Service Fee</span>
                   <div className="group relative">
                     <span className="text-[10px] bg-gray-200 text-gray-400 rounded-full w-3 h-3 flex items-center justify-center cursor-help">?</span>
                     <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-40 p-2 bg-black text-white text-[9px] rounded-lg opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
@@ -135,18 +136,18 @@ const CheckoutForm = ({ onZonesReady, confusion, onPay, onBack, cart = [], total
                     </div>
                   </div>
                 </div>
-                <span className="font-black text-sm text-blue-600">+${serviceFee.toFixed(2)}</span>
+                <span className="font-black text-xs md:text-sm text-blue-600">+${serviceFee.toFixed(2)}</span>
               </div>
               <div className="flex justify-between items-center">
-                <span className="text-xs font-bold text-gray-500 uppercase tracking-wider">Estimated Tax</span>
-                <span className="font-black text-sm text-gray-900">${taxAmount.toFixed(2)}</span>
+                <span className="text-[10px] md:text-xs font-bold text-gray-500 uppercase tracking-wider">Estimated Tax</span>
+                <span className="font-black text-xs md:text-sm text-gray-900">${taxAmount.toFixed(2)}</span>
               </div>
 
               <div className="pt-8 mt-4 border-t border-gray-200 flex justify-between items-center">
-                <span className="text-xs font-black uppercase tracking-widest text-blue-600">Total Payable</span>
+                <span className="text-[10px] md:text-xs font-black uppercase tracking-widest text-blue-600">Total Payable</span>
                 <div className="text-right">
-                  <span className="text-4xl font-black tracking-tighter italic text-gray-900">${totalAmount.toFixed(2)}</span>
-                  <p className="text-[9px] text-gray-400 font-bold uppercase mt-1">USD • VAT INCLUDED</p>
+                  <span className="text-3xl md:text-4xl font-black tracking-tighter italic text-gray-900">${totalAmount.toFixed(2)}</span>
+                  <p className="text-[8px] md:text-[9px] text-gray-400 font-bold uppercase mt-1">USD • VAT INCLUDED</p>
                 </div>
               </div>
             </div>

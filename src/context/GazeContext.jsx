@@ -209,7 +209,7 @@ export const GazeProvider = ({ children }) => {
   };
 
   return (
-    <GazeContext.Provider value={{ gaze, isMouseSim, setIsMouseSim, isModelLoaded, webcamStream }}>
+    <GazeContext.Provider value={{ gaze, isMouseSim, setIsMouseSim, isModelLoaded, webcamStream, stopEyeTracking }}>
       {children}
 
 

@@ -40,7 +40,18 @@ export default function ValidationDashboard() {
 
     const avgCompletionTime = calculateAvg(sessionData.map(s => s.duration));
     const totalEvents = sessionData.reduce((acc, s) => acc + (s.confusion_events?.length || 0), 0);
-    const conversionRate = ((sessionData.filter(s => s.converted).length / sessionData.length) * 100).toFixed(0);
+
+    // Split Conversion Rates
+    const sessionsWithHelp = sessionData.filter(s => s.help_shown);
+    const sessionsNoHelp = sessionData.filter(s => !s.help_shown);
+
+    const conversionRateWithHelp = sessionsWithHelp.length > 0
+        ? ((sessionsWithHelp.filter(s => s.converted).length / sessionsWithHelp.length) * 100).toFixed(0)
+        : 0;
+
+    const conversionRateNoHelp = sessionsNoHelp.length > 0
+        ? ((sessionsNoHelp.filter(s => s.converted).length / sessionsNoHelp.length) * 100).toFixed(0)
+        : 0;
 
 
     const allGazePoints = sessionData.flatMap(s => s.gaze_points || []);
@@ -67,10 +78,11 @@ export default function ValidationDashboard() {
                     </div>
                 </header>
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10 text-black">
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-10 text-black">
                     <MetricCard title="Avg. Time to Pay" value={`${avgCompletionTime}s`} subtitle="Checkout Velocity" />
                     <MetricCard title="Total Confusions" value={totalEvents} subtitle="Detected Friction Points" />
-                    <MetricCard title="Conversion Rate" value={`${conversionRate}%`} subtitle="Session Success" />
+                    <MetricCard title="Conv. Rate (No Help)" value={`${conversionRateNoHelp}%`} subtitle="Organic Success" />
+                    <MetricCard title="Conv. Rate (With Help)" value={`${conversionRateWithHelp}%`} subtitle="AI Assisted Success" />
                 </div>
 
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">

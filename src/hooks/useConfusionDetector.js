@@ -1,10 +1,10 @@
 import { useState, useEffect, useRef } from 'react';
 import { useGaze } from '../context/GazeContext.jsx';
 
-const DWELL_THRESHOLD_MS = 3000;
-const SACCADE_VELOCITY_THRESHOLD = 2;
-const REGRESSION_LIMIT = 3;
-const SACCADE_MIN_COUNT = 5;
+const DWELL_THRESHOLD_MS = 5000;
+const SACCADE_VELOCITY_THRESHOLD = 3;
+const REVIST_LIMIT = 3;
+const SACCADE_MIN_COUNT = 3;
 
 export const useConfusionDetector = (zones) => {
   const { gaze } = useGaze();
@@ -13,6 +13,7 @@ export const useConfusionDetector = (zones) => {
   const gazeHistory = useRef([]);
   const zoneStats = useRef({});
   const mountTime = useRef(Date.now());
+
 
   useEffect(() => {
     if (!gaze.x || !gaze.y) return;
@@ -57,7 +58,7 @@ export const useConfusionDetector = (zones) => {
 
       if (stats.dwell > DWELL_THRESHOLD_MS) {
         setConfusionState({ isConfused: true, reason: 'High Dwell Time', zoneId: zId });
-      } else if (stats.revisits > REGRESSION_LIMIT) {
+      } else if (stats.revisits > REVIST_LIMIT) {
         setConfusionState({ isConfused: true, reason: 'Frequent Re-reading', zoneId: zId });
       } else if (recentSaccades >= SACCADE_MIN_COUNT) {
         setConfusionState({ isConfused: true, reason: 'Rapid Scanning', zoneId: zId });
