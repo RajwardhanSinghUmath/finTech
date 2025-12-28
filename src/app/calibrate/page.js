@@ -24,7 +24,7 @@ const CalibrationPoint = ({ style, id, onClick, progress }) => {
     );
 };
 
-import { GazeProvider } from '@/context/GazeContext.jsx';
+import { GazeProvider, useGaze } from '@/context/GazeContext.jsx';
 import GazeDebugger from '@/components/GazeDebugger';
 import React, { useState, useEffect } from 'react';
 
@@ -53,7 +53,7 @@ function CalibrateContent() {
 
     const getPosition = (id) => {
         switch (id) {
-            case 'tl': return { top: '40px', left: '40px' };
+            case 'tl': return { top: '40px', left: '220px' };
             case 'tc': return { top: '40px', left: '50%', transform: 'translateX(-50%)' };
             case 'tr': return { top: '40px', right: '40px' };
 
@@ -68,10 +68,33 @@ function CalibrateContent() {
         }
     };
 
+    const { webcamStream } = useGaze();
+    const videoRef = React.useRef(null);
+
+    useEffect(() => {
+        if (videoRef.current && webcamStream) {
+            videoRef.current.srcObject = webcamStream;
+        }
+    }, [webcamStream]);
+
     return (
         <div className="relative w-screen h-screen bg-black overflow-hidden flex items-center justify-center">
             <GazeDebugger zones={[]} />
 
+            {/* Camera Feed */}
+            <div className="absolute top-4 left-4 w-48 h-36 rounded-xl overflow-hidden border-2 border-white/20 shadow-2xl z-40 pointer-events-none bg-black/50 backdrop-blur-sm">
+                <video
+                    ref={videoRef}
+                    autoPlay
+                    playsInline
+                    muted
+                    className="w-full h-full object-cover transform scale-x-[-1] opacity-80"
+                />
+                <div className="absolute inset-0 border-2 border-dashed border-white/30 rounded-lg m-2" />
+                <div className="absolute bottom-2 left-0 right-0 text-center">
+                    <p className="text-[8px] text-white/50 uppercase tracking-widest font-mono">Face Here</p>
+                </div>
+            </div>
 
             <div className="absolute inset-0 z-0 pointer-events-none opacity-50">
                 <video

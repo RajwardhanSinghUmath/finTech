@@ -7,6 +7,7 @@ export const GazeProvider = ({ children }) => {
   const [gaze, setGaze] = useState({ x: 0, y: 0, timestamp: 0 });
   const [isMouseSim, setIsMouseSim] = useState(false);
   const [isModelLoaded, setIsModelLoaded] = useState(false);
+  const [webcamStream, setWebcamStream] = useState(null);
 
 
   const videoRef = useRef(null);
@@ -75,6 +76,7 @@ export const GazeProvider = ({ children }) => {
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ video: true });
       streamRef.current = stream;
+      setWebcamStream(stream);
       if (videoRef.current) {
         videoRef.current.srcObject = stream;
 
@@ -94,6 +96,7 @@ export const GazeProvider = ({ children }) => {
     if (streamRef.current) {
       streamRef.current.getTracks().forEach(track => track.stop());
       streamRef.current = null;
+      setWebcamStream(null);
     }
     if (faceLandmarkerRef.current) {
       faceLandmarkerRef.current.close();
@@ -206,7 +209,7 @@ export const GazeProvider = ({ children }) => {
   };
 
   return (
-    <GazeContext.Provider value={{ gaze, isMouseSim, setIsMouseSim, isModelLoaded }}>
+    <GazeContext.Provider value={{ gaze, isMouseSim, setIsMouseSim, isModelLoaded, webcamStream }}>
       {children}
 
 
