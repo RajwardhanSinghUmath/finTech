@@ -22,11 +22,11 @@ const CheckoutForm = ({ onZonesReady, confusion, onPay, onBack, cart = [], total
 
   useEffect(() => {
     updateZones();
-    // Add multiple event listeners to catch movement/layout shifts
+
     window.addEventListener('resize', updateZones);
     window.addEventListener('scroll', updateZones, true);
 
-    // Polling as a fallback for dynamic content shifts
+
     const pollInterval = setInterval(updateZones, 1000);
 
     return () => {
@@ -43,10 +43,8 @@ const CheckoutForm = ({ onZonesReady, confusion, onPay, onBack, cart = [], total
 
   return (
     <div className="relative text-black bg-transparent text-black rounded-[2.3rem] shadow-2xl overflow-hidden border border-gray-100">
-      {/* Main Checkout Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-0">
 
-        {/* Left Column: Form Details */}
         <div className="p-10 space-y-8 border-r border-gray-100">
           <header className="flex justify-between items-start">
             <div className="text-right">
@@ -78,7 +76,6 @@ const CheckoutForm = ({ onZonesReady, confusion, onPay, onBack, cart = [], total
             </div>
           </div>
 
-          {/* ZONE: Terms and Conditions */}
           <div
             ref={termsRef}
             id="terms-cond"
@@ -100,7 +97,6 @@ const CheckoutForm = ({ onZonesReady, confusion, onPay, onBack, cart = [], total
           </div>
         </div>
 
-        {/* Right Column: Order Summary */}
         <div className="bg-gray-50/50 p-10 flex flex-col justify-between rounded-r-[2.3rem]">
           <div className="space-y-10">
             <div className="flex justify-between items-center">

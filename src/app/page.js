@@ -52,7 +52,7 @@ export default function Page() {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [cart, setCart] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
-  // Load cart from localStorage
+
   useEffect(() => {
     const saved = localStorage.getItem("supply-cart");
     if (saved) {
@@ -64,7 +64,7 @@ export default function Page() {
     }
   }, []);
 
-  // Save cart to localStorage
+
   useEffect(() => {
     localStorage.setItem("supply-cart", JSON.stringify(cart));
   }, [cart]);
@@ -107,7 +107,6 @@ export default function Page() {
     <>
 
       <div className="min-h-screen relative flex flex-col">
-        {/* BACKGROUND VIDEO */}
         <div className="fixed inset-0 z-0 pointer-events-none">
           <video
             src="/Planet_Video.mp4"
@@ -121,10 +120,8 @@ export default function Page() {
           <div className="absolute inset-0 bg-white/10 backdrop-blur-xl" />
         </div>
 
-        {/* Content Wrapper */}
         <div className="relative z-10 flex flex-col min-h-screen">
 
-          {/* HEADER */}
           <Header
             onCartClick={() => setIsCartOpen(true)}
             cartCount={cartCount}
@@ -132,12 +129,10 @@ export default function Page() {
           />
 
 
-          {/* MAIN SHOP PAGE */}
           <main className="grow bg-white/10 ">
             <Shop onAddToCart={addToCart} />
           </main>
 
-          {/* FOOTER */}
           <footer className="bg-white/10 py-12 md:py-20 text-black">
             <div className="px-4 md:px-6 max-w-screen-2xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12">
               <div className="space-y-4">

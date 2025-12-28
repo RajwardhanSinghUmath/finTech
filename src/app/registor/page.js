@@ -67,7 +67,6 @@ const Register = () => {
 
     return (
         <section className="relative w-full h-screen bg-white overflow-hidden selection:bg-blue-500">
-            {/* 1. BACKGROUND VIDEO (Using Planet_Video like your reference) */}
             <div className="absolute inset-0 z-0 pointer-events-none">
                 <video
                     src="/Planet_Video.mp4"
@@ -77,11 +76,9 @@ const Register = () => {
                 <div className="absolute inset-0 bg-black/10" />
             </div>
 
-            {/* 2. MAIN CONTAINER */}
             <div className="relative z-10 w-full h-full flex items-center justify-center p-4">
                 <div className="w-full max-w-md">
 
-                    {/* Brand Header */}
                     <div className="mb-8 text-center bg-white/10 -md p-6 rounded-3xl shadow-xl border border-white/50 w-full transform hover:scale-[1.01] transition-transform text-black">
                         <div className="flex flex-col items-center">
                             <div className="flex items-center gap-2 mb-1">
@@ -94,14 +91,12 @@ const Register = () => {
                         </div>
                     </div>
 
-                    {/* Auth Form Card */}
                     <div className="bg-white/10  p-8 rounded-[2.5rem] shadow-2xl border border-white/50">
                         {!pendingVerification ? (
                             <div className="space-y-6">
                                 <div className="text-center">
                                     <h2 className="text-xs font-black uppercase tracking-[0.2em] text-black mb-6">Create Secure Account</h2>
 
-                                    {/* Social Logins */}
                                     <div className="flex gap-3 mb-8">
                                         <button onClick={() => handleSocialLogin("oauth_google")} className="flex-1 bg-gray-50 hover:bg-gray-100 border border-gray-200 py-3 rounded-2xl flex items-center justify-center gap-2 transition-all active:scale-95 group">
                                             <FaGoogle className="text-red-500 group-hover:scale-110 transition-transform" />

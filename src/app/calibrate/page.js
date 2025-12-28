@@ -9,17 +9,16 @@ const CalibrationPoint = ({ style, id, onClick, progress }) => {
             className="absolute w-12 h-12 rounded-full border-2 border-white/50 backdrop-blur-sm shadow-[0_0_30px_rgba(255,0,0,0.5)] transform hover:scale-110 active:scale-95 transition-all outline-none overflow-hidden group"
             style={{
                 ...style,
-                background: progress >= 5 ? 'rgba(234, 179, 8, 0.9)' : 'rgba(239, 68, 68, 0.8)', // Yellow if done, Red if not
-                zIndex: 50
+                background: progress >= 5 ? 'rgba(234, 179, 8, 0.9)' : 'rgba(239, 68, 68, 0.8)', zIndex: 50
             }}
         >
-            {/* Dynamic Inner Circle based on progress */}
+
             <div
                 className="absolute inset-0 bg-white opacity-20 transition-all duration-300 transform origin-center"
                 style={{ transform: `scale(${progress / 5})` }}
             />
 
-            {/* Center Dot */}
+
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-2 h-2 bg-white rounded-full shadow-lg" />
         </button>
     );
@@ -39,13 +38,13 @@ function CalibrateContent() {
     const handlePointClick = (id) => {
         setPoints(prev => {
             const currentVal = prev[id];
-            if (currentVal >= 5) return prev; // Already done
+            if (currentVal >= 5) return prev;
             return { ...prev, [id]: currentVal + 1 };
         });
     };
 
     useEffect(() => {
-        // Check if all points are calibrated (>= 5 clicks)
+
         const isComplete = Object.values(points).every(val => val >= 5);
         if (isComplete) {
             window.location.href = "/checkout";
@@ -73,7 +72,7 @@ function CalibrateContent() {
         <div className="relative w-screen h-screen bg-black overflow-hidden flex items-center justify-center">
             <GazeDebugger zones={[]} />
 
-            {/* BACKGROUND 3D MODEL VIDEO (Reused) */}
+
             <div className="absolute inset-0 z-0 pointer-events-none opacity-50">
                 <video
                     src="/Planet_Video.mp4"
@@ -85,7 +84,7 @@ function CalibrateContent() {
                 />
             </div>
 
-            {/* 9 Calibration Points */}
+
             {Object.keys(points).map((key) => (
                 <CalibrationPoint
                     key={key}
@@ -96,7 +95,7 @@ function CalibrateContent() {
                 />
             ))}
 
-            {/* Center UI / Instructions */}
+
             {points['cc'] < 5 && (
                 <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 mt-20 text-center pointer-events-none z-0">
                     <p className="text-white/50 text-xs uppercase tracking-[0.3em] font-bold animate-pulse">
@@ -104,7 +103,6 @@ function CalibrateContent() {
                     </p>
                 </div>
             )}
-            {/* Skip Button */}
             <button
                 onClick={() => window.location.href = "/checkout"}
                 className="fixed bottom-48 right-8 z-[100] bg-white text-black px-6 py-4 rounded-xl text-[12px] font-black uppercase tracking-[0.2em] hover:bg-gray-200 transition-colors flex items-center gap-2 group shadow-lg"

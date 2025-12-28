@@ -2,14 +2,14 @@
 import React, { useEffect, useState } from 'react';
 import { useSupabaseLogger } from '@/hooks/useSupabaseLogger';
 
-// 1. HELPER FUNCTION (Must be outside or inside the component to be defined)
+
 const calculateAvg = (arr) => {
     if (!arr || arr.length === 0) return 0;
     const sum = arr.reduce((a, b) => a + b, 0);
     return (sum / arr.length).toFixed(1);
 };
 
-// 2. SUBCONTAINER COMPONENT
+
 function MetricCard({ title, value, subtitle }) {
     return (
         <div className="bg-white p-8 border border-gray-200 rounded-[2rem] shadow-sm transition-all hover:shadow-md">
@@ -37,23 +37,22 @@ export default function ValidationDashboard() {
     if (loading) return <div className="p-20 text-center font-bold">Connecting to Supabase...</div>;
     if (sessionData.length === 0) return <div className="p-20 text-center">No session data found.</div>;
 
-    // Aggregate Metrics
+
     const avgCompletionTime = calculateAvg(sessionData.map(s => s.duration));
     const totalEvents = sessionData.reduce((acc, s) => acc + (s.confusion_events?.length || 0), 0);
     const conversionRate = ((sessionData.filter(s => s.converted).length / sessionData.length) * 100).toFixed(0);
 
-    // Extract all points for the heatmap
+
     const allGazePoints = sessionData.flatMap(s => s.gaze_points || []);
 
     return (
         <div className="min-h-screen bg-[#F8F9FA] text-[#1A1A1A] p-6 md:p-12 font-sans selection:bg-blue-100">
             <div className="max-w-6xl mx-auto">
 
-                {/* Header Section */}
                 <header className="flex flex-col md:flex-row justify-between items-start md:items-center mb-10 gap-4">
                     <div>
                         <h1 className="text-3xl font-bold tracking-tight text-gray-900">
-                           Clarity <span className="text-blue-600">Guardian</span> Validation<span className="text-blue-600">Dashboard</span>
+                            Clarity <span className="text-blue-600">Guardian</span> Validation<span className="text-blue-600">Dashboard</span>
                         </h1>
                         <p className="text-sm font-medium text-gray-500 mt-1 text-black">
                             Empirical Eye-Tracking Analytics
@@ -68,17 +67,14 @@ export default function ValidationDashboard() {
                     </div>
                 </header>
 
-                {/* Metrics Grid */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10 text-black">
                     <MetricCard title="Avg. Time to Pay" value={`${avgCompletionTime}s`} subtitle="Checkout Velocity" />
                     <MetricCard title="Total Confusions" value={totalEvents} subtitle="Detected Friction Points" />
                     <MetricCard title="Conversion Rate" value={`${conversionRate}%`} subtitle="Session Success" />
                 </div>
 
-                {/* Analytics Section */}
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
 
-                    {/* Heatmap Card */}
                     <div className="lg:col-span-2 bg-white border border-gray-200 rounded-[2rem] p-8 shadow-sm">
                         <div className="flex justify-between items-center mb-6">
                             <h3 className="font-bold text-lg text-gray-800">Gaze Intensity Map</h3>
@@ -86,10 +82,8 @@ export default function ValidationDashboard() {
                         </div>
 
                         <div className="relative border border-gray-100 rounded-2xl overflow-hidden aspect-video bg-gray-50">
-                            {/* Background UI Preview */}
                             <div className="absolute inset-0 opacity-20 grayscale pointer-events-none bg-[url('/image.png')] bg-cover bg-center"></div>
 
-                            {/* Dynamic Heatmap Overlays based on Gaze Points */}
                             <div className="relative w-full h-full pointer-events-none">
                                 {allGazePoints.map((point, i) => (
                                     <div
@@ -110,7 +104,6 @@ export default function ValidationDashboard() {
                         </div>
                     </div>
 
-                    {/* Logs Card */}
                     <div className="bg-white border border-gray-200 rounded-[2rem] p-8 shadow-sm">
                         <h3 className="font-bold text-lg text-gray-800 mb-6">Confusion Logs</h3>
                         <div className="space-y-6">

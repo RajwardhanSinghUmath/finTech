@@ -67,19 +67,16 @@ export default function ProductDetailPage() {
         <div className="w-full h-screen box-border overflow-hidden">
             <div className="min-h-screen bg-white flex flex-col relative">
 
-                {/* HEADER */}
                 <Header
                     onCartClick={() => setIsCartOpen(true)}
                     cartCount={cartCount}
                     setIsOpen={setIsOpen}
                 />
 
-                {/* MAIN DETAIL PAGE */}
                 <main className="grow bg-white">
                     <ProductDetail onAddToCart={addToCart} />
                 </main>
 
-                {/* CART DRAWER */}
                 <CartDrawer
                     isOpen={isCartOpen}
                     onClose={() => setIsCartOpen(false)}

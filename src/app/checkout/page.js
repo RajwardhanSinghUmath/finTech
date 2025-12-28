@@ -36,7 +36,7 @@ const SuccessApp = () => {
                 const parsedCart = JSON.parse(savedCart);
                 setCart(parsedCart);
                 const sub = parsedCart.reduce((acc, item) => acc + (item.price * item.quantity), 0);
-                const tax = sub * 0.10; // 10% Tax
+                const tax = sub * 0.10;
                 const service = 15.50;
                 setTotals({
                     subtotal: sub,
@@ -50,7 +50,7 @@ const SuccessApp = () => {
         }
     }, []);
 
-    // Analytics Data Accumulation
+
     const startTime = useRef(Date.now());
     const [gazeHistory, setGazeHistory] = useState([]);
     const [confusionLogs, setConfusionLogs] = useState([]);
@@ -71,7 +71,7 @@ const SuccessApp = () => {
         setZones(newZones);
     }, []);
 
-    // 1. CAPTURE GAZE POINTS (Every 200ms for Heatmap, Normalized)
+
     useEffect(() => {
         const interval = setInterval(() => {
             if (gaze.x && gaze.y) {
@@ -83,7 +83,7 @@ const SuccessApp = () => {
         return () => clearInterval(interval);
     }, [gaze]);
 
-    // 2. CAPTURE CONFUSION EVENTS
+
     useEffect(() => {
         if (confusion.isConfused) {
             setConfusionLogs(prev => [...prev, {
@@ -94,7 +94,7 @@ const SuccessApp = () => {
         }
     }, [confusion.isConfused, confusion.zoneId, confusion.reason]);
 
-    // 3. TOAST LOGIC (Show help toast after 4 seconds of confusion if side-panel isn't open)
+
     useEffect(() => {
         let timer;
         if (confusion.isConfused && !needHelp) {
@@ -115,7 +115,7 @@ const SuccessApp = () => {
         scrollToBottom();
     }, [messages, needHelp]);
 
-    // Proactive AI Message Trigger (Triggered when help is opened or proactively)
+
     useEffect(() => {
         if (confusion.isConfused && needHelp) {
             const confusionKey = `${confusion.zoneId}-${confusion.reason}`;
@@ -178,7 +178,7 @@ const SuccessApp = () => {
         - Keep answers under 3 sentences. Be human and direct.
       `;
 
-        // Ensure we are passing the FRESH system context with every new message
+
         const systemContext = [{ role: 'system', content: contextualPrompt }];
         const response = await getGroqChatCompletion([...systemContext, ...newHistory]);
         setMessages(prev => [...prev, { role: 'assistant', content: response }]);
@@ -200,7 +200,7 @@ const SuccessApp = () => {
             router.replace('/checkout');
         } else {
             console.error("Database error:", error);
-            // Still redirect but note the error
+
             router.replace('/checkout');
         }
     };
@@ -220,7 +220,6 @@ const SuccessApp = () => {
 
     return (
         <section className="relative w-full h-screen bg-white overflow-hidden selection:bg-blue-500">
-            {/* 1. BACKGROUND VIDEO */}
             <div className="absolute inset-0 z-0 pointer-events-none">
                 <video
                     src="/Planet_Video.mp4"
@@ -234,11 +233,9 @@ const SuccessApp = () => {
                 <div className="absolute inset-0 bg-black/10" />
             </div>
 
-            {/* 2. MAIN UI CONTAINER */}
             <div className={`relative z-10 w-full h-full transition-all duration-500 overflow-y-auto ${needHelp ? 'pr-0 sm:pr-[35%] lg:pr-[28%]' : ''}`}>
                 <div className="min-h-screen w-full flex flex-col items-center justify-center p-4 md:p-8">
 
-                    {/* Header */}
                     <div className="mb-8 text-center bg-white/10  p-6 rounded-3xl shadow-xl border border-white/50 w-full max-w-4xl transform hover:scale-[1.01] transition-transform flex justify-between items-center text-black">
                         <button onClick={handleBack} className="text-xs font-black uppercase tracking-[0.2em] text-gray-500 hover:text-blue-600 transition-colors">
                             ← Back to Store
@@ -260,7 +257,6 @@ const SuccessApp = () => {
                         </div>
                     </div>
 
-                    {/* Checkout Content */}
                     <main className="w-full max-w-4xl relative">
                         <CheckoutForm
                             confusion={confusion}
@@ -271,11 +267,9 @@ const SuccessApp = () => {
                             totals={totals}
                         />
 
-                        {/* Gaze Reticle Overlay */}
                         <GazeDebugger zones={zones} />
                     </main>
 
-                    {/* Passive Floating Help Trigger */}
                     {!needHelp && (
                         <button
                             onClick={() => setNeedHelp(true)}
@@ -289,12 +283,10 @@ const SuccessApp = () => {
                         </button>
                     )}
 
-                    {/* Help Toast (Delayed) */}
                     {showToast && !needHelp && (
                         <div className="fixed top-8 left-1/2 -translate-x-1/2 z-[100] w-full max-w-3xl px-4 animate-in fade-in slide-in-from-top-4 duration-500">
                             <div className="bg-white/90 backdrop-blur-xl border border-yellow-200/50 p-4 rounded-[2rem] shadow-2xl flex flex-col md:flex-row items-center justify-between gap-6 border-b-4 border-b-yellow-400">
 
-                                {/* Icon & Title */}
                                 <div className="flex items-center gap-4 min-w-max">
                                     <div className="w-10 h-10 bg-yellow-400 rounded-full flex items-center justify-center shadow-inner shrink-0 text-xl animate-bounce">
                                         💡
@@ -305,12 +297,10 @@ const SuccessApp = () => {
                                     </div>
                                 </div>
 
-                                {/* Message */}
                                 <p className="text-xs font-bold text-gray-700 italic leading-relaxed text-center md:text-left">
                                     "It looks like you're hesitating on the <span className="text-blue-600 border-b border-blue-200">{confusion.reason}</span>. Would you like to clarify this?"
                                 </p>
 
-                                {/* Actions */}
                                 <div className="flex items-center gap-2 shrink-0">
                                     <button
                                         onClick={() => { setNeedHelp(true); setShowToast(false); }}
@@ -331,11 +321,9 @@ const SuccessApp = () => {
                 </div>
             </div>
 
-            {/* 3. SUPPORT ASSISTANT SIDEBAR */}
             {needHelp && (
                 <div className="absolute right-0 top-0 w-full sm:w-[35%] lg:w-[28%] h-full bg-white border-l border-gray-100 shadow-[-20px_0_60px_rgba(0,0,0,0.05)] z-40 flex flex-col transition-all duration-500 transform translate-x-0 animate-in slide-in-from-right overflow-hidden">
 
-                    {/* Assistant Header */}
                     <div className="p-8 border-b border-gray-50 flex justify-between items-center bg-gray-50/50">
                         <div>
                             <h2 className="font-black text-xs uppercase tracking-[0.3em] text-gray-900">Guardian Assistant</h2>
@@ -349,7 +337,6 @@ const SuccessApp = () => {
                         </button>
                     </div>
 
-                    {/* Messages Area */}
                     <div className="flex-1 overflow-y-auto p-8 space-y-6 scrollbar-hide">
                         {messages.length === 0 && (
                             <div className="h-full flex flex-col items-center justify-center text-center space-y-4 opacity-30">
@@ -378,7 +365,6 @@ const SuccessApp = () => {
                         <div ref={messagesEndRef} />
                     </div>
 
-                    {/* Chat Input Area */}
                     <div className="p-8 bg-white border-t border-gray-50">
                         <div className='flex gap-2 items-center bg-gray-50 p-2 rounded-[2rem] border border-gray-100 focus-within:ring-2 focus-within:ring-blue-100 transition-all'>
                             <input

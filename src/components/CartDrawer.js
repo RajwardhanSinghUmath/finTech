@@ -24,11 +24,11 @@ const CartDrawer = ({ isOpen, onClose, cartItems, onRemoveItem, onUpdateQuantity
 
   const drawerRef = useRef(null);
   const backdropRef = useRef(null);
-  const itemRefs = useRef({}); // holds refs for individual items
+  const itemRefs = useRef({});
 
   const subtotal = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
-  // Animate opening
+
   useEffect(() => {
     if (isOpen) {
       gsap.fromTo(
@@ -45,7 +45,7 @@ const CartDrawer = ({ isOpen, onClose, cartItems, onRemoveItem, onUpdateQuantity
     }
   }, [isOpen]);
 
-  // Close animation
+
   const handleClose = () => {
     setIsClosing(true);
 
@@ -66,7 +66,7 @@ const CartDrawer = ({ isOpen, onClose, cartItems, onRemoveItem, onUpdateQuantity
     });
   };
 
-  // Remove item animation
+
   const handleRemove = (id) => {
     const el = itemRefs.current[id];
 
@@ -83,7 +83,7 @@ const CartDrawer = ({ isOpen, onClose, cartItems, onRemoveItem, onUpdateQuantity
     }
   };
 
-  // Quantity update animation
+
   const handleQuantityUpdate = (id, newQty, oldQty) => {
     if (newQty === 0) {
       handleRemove(id);
@@ -103,7 +103,7 @@ const CartDrawer = ({ isOpen, onClose, cartItems, onRemoveItem, onUpdateQuantity
     }
   };
 
-  // Fade items in when drawer opens
+
   useEffect(() => {
     if (isOpen) {
       Object.values(itemRefs.current).forEach((el, index) => {
@@ -129,14 +129,12 @@ const CartDrawer = ({ isOpen, onClose, cartItems, onRemoveItem, onUpdateQuantity
   return (
     <div className="fixed inset-0 z-50 flex justify-end text-black">
 
-      {/* Backdrop */}
       <div
         ref={backdropRef}
         className="absolute inset-0 bg-black/20 backdrop-blur-sm"
         onClick={handleClose}
       />
 
-      {/* Drawer */}
       <div
         ref={drawerRef}
         className="relative w-full max-w-md bg-white h-full shadow-xl flex flex-col"
@@ -158,7 +156,6 @@ const CartDrawer = ({ isOpen, onClose, cartItems, onRemoveItem, onUpdateQuantity
           </button>
         </div>
 
-        {/* Items */}
         <div className="flex-1 overflow-y-auto p-6 space-y-6">
           {cartItems.length === 0 ? (
             <div className="text-center text-gray-500 mt-20">Your cart is empty.</div>
@@ -224,7 +221,6 @@ const CartDrawer = ({ isOpen, onClose, cartItems, onRemoveItem, onUpdateQuantity
           )}
         </div>
 
-        {/* Footer */}
         <div className="border-t border-gray-200 p-6 bg-gray-50 z-10">
           <div className="flex justify-between mb-4 text-sm font-bold">
             <span>Subtotal</span>

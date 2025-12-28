@@ -18,7 +18,7 @@ const Header = ({ onCartClick, cartCount, setIsOpen: setNavOpen }) => {
   const router = useRouter();
 
   useEffect(() => {
-    // Marquee scroll
+
     gsap.to(marqueeRef.current, {
       xPercent: -50,
       repeat: -1,
@@ -26,7 +26,7 @@ const Header = ({ onCartClick, cartCount, setIsOpen: setNavOpen }) => {
       ease: "linear",
     });
 
-    // --- HOVER LOGIC FIXED FOR NEXT.JS ---
+
     const addHover = (element) => {
       if (!element) return;
 
@@ -36,7 +36,7 @@ const Header = ({ onCartClick, cartCount, setIsOpen: setNavOpen }) => {
       element.addEventListener("mouseenter", enter);
       element.addEventListener("mouseleave", leave);
 
-      // Cleanup (required in Next.js!)
+
       return () => {
         element.removeEventListener("mouseenter", enter);
         element.removeEventListener("mouseleave", leave);
@@ -55,28 +55,16 @@ const Header = ({ onCartClick, cartCount, setIsOpen: setNavOpen }) => {
 
   return (
     <>
-      {/* Marquee Banner */}
-      {/* <div className="bg-black text-white text-xs py-2 overflow-hidden whitespace-nowrap">
 
-        <div
-          ref={marqueeRef}
-          className="inline-block"
-          style={{ whiteSpace: "nowrap" }}
-        >
-          FREE SHIPPING ON ORDERS OVER $150 — WORLDWIDE SHIPPING AVAILABLE —
-          NEW COLLECTION DROPPING SOON — FREE SHIPPING ON ORDERS OVER $150 —
-          WORLDWIDE SHIPPING AVAILABLE — NEW COLLECTION DROPPING SOON —
-        </div>
-      </div> */}
 
-      {/* Main Navbar */}
+
       <header
         ref={headerRef}
         className="sticky top-0 z-40 bg-white/10 backdrop-blur-xl border-b border-white/50"
       >
         <div className="flex justify-between items-center h-16 px-4 md:px-6">
 
-          {/* Left Section: Back Button & Mobile Menu */}
+
           <div className="flex-1 flex items-center gap-4">
             <button
               onClick={() => router.back()}
@@ -86,7 +74,7 @@ const Header = ({ onCartClick, cartCount, setIsOpen: setNavOpen }) => {
               Back
             </button>
 
-            {/* Mobile Menu */}
+
             <div className="md:hidden">
               <button ref={menuRef} className="p-2 -ml-2" onClick={() => setNavOpen(true)}>
                 <svg
@@ -107,7 +95,7 @@ const Header = ({ onCartClick, cartCount, setIsOpen: setNavOpen }) => {
             </div>
           </div>
 
-          {/* Logo */}
+
           <div className="flex-1 flex justify-center">
             <a
               ref={logoRef}
@@ -118,7 +106,7 @@ const Header = ({ onCartClick, cartCount, setIsOpen: setNavOpen }) => {
             </a>
           </div>
 
-          {/* Right Buttons */}
+
           <div className="flex-1 flex justify-end items-center gap-4 md:gap-6">
 
             <button

@@ -39,7 +39,6 @@ const ProductDetail = ({ onAddToCart }) => {
   return (
     <div className="animate-fade-in min-h-screen bg-white">
       <div className="grid grid-cols-1 lg:grid-cols-2">
-        {/* Image Section */}
         <div className="bg-gray-50 relative aspect-square lg:aspect-auto lg:h-[calc(100vh-64px)] overflow-hidden">
           <img
             src={product.image}
@@ -48,7 +47,6 @@ const ProductDetail = ({ onAddToCart }) => {
           />
         </div>
 
-        {/* Details Section */}
         <div className="p-6 md:p-12 lg:p-20 flex flex-col justify-center max-w-2xl">
           <button
             onClick={() => router.push('/e-com')}

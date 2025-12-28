@@ -50,7 +50,7 @@ const ProductCard = ({ product, onAddToCart }) => {
 
   const handleBuyNow = (e) => {
     e.stopPropagation();
-    onAddToCart(product, 1, true); // Open cart immediately
+    onAddToCart(product, 1, true);
     setAddedSuccess(true);
   };
 
@@ -59,7 +59,6 @@ const ProductCard = ({ product, onAddToCart }) => {
       onClick={handleCardClick}
       className="group bg-white backdrop-blur-md border border-white/20 relative flex flex-col h-full hover:z-10 transition-all duration-300 cursor-pointer rounded-2xl overflow-hidden hover:bg-white hover:border-white/40"
     >
-      {/* Image Container */}
       <div className="aspect-4/5 w-full overflow-hidden bg-transparent relative">
         <img
           src={product.image}
@@ -72,7 +71,6 @@ const ProductCard = ({ product, onAddToCart }) => {
           </div>
         )}
 
-        {/* Added Confirmation Overlay */}
         {addedSuccess && (
           <div className="absolute inset-0 bg-black/10 backdrop-blur-[1px] flex items-center justify-center z-30">
             <div className="bg-black text-white px-4 py-2 text-xs font-bold uppercase tracking-widest rounded-full shadow-lg">
@@ -82,7 +80,6 @@ const ProductCard = ({ product, onAddToCart }) => {
         )}
       </div>
 
-      {/* Details */}
       <div className="p-4 flex-1 flex flex-col justify-between border-t border-white/10 sm:border-none relative bg-transparent z-20">
         <div className="mb-4">
           <div className="flex justify-between items-start">
@@ -98,7 +95,6 @@ const ProductCard = ({ product, onAddToCart }) => {
         <div className="flex items-center justify-between min-h-8">
           <p className="text-sm font-medium text-gray-900">${product.price}</p>
 
-          {/* Actions Container */}
           <div
             onClick={(e) => e.stopPropagation()}
             className={`
