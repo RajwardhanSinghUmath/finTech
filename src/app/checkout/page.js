@@ -129,12 +129,13 @@ const SuccessApp = () => {
 
         USER CONTEXT:
         - The user is currently looking at the: "${confusion?.zoneId}" section.
-        - Our eye-tracker detected confusion.
+        - Our eye-tracker detected hesitation due to: "${confusion?.reason || 'Prolonged focus'}".
+        - This means they might be confused or calculating.
 
         KNOWLEDGE BASE:
         1. Terms of Service: I agree to the Terms of Service, including the non-refundable processing fee of $${totals.serviceFee.toFixed(2)}, an estimated 10% tax rate, and automated subscription renewal.
         2. Price Summary: Subtotal: $${totals.subtotal.toFixed(2)}, Service Fee: $${totals.serviceFee.toFixed(2)}, Tax (10%): $${totals.tax.toFixed(2)}. Total: $${totals.total.toFixed(2)}.
-        3. Cart Items: ${cart.map(i => `${i.name} (Qty: ${i.quantity})`).join(", ")}.
+        3. Cart Items: ${cart.map(i => `${i.name} - $${i.price} (Qty: ${i.quantity})`).join(", ")}.
 
         YOUR GOAL:
         - Acknowledge what they are looking at (e.g., "I noticed you're looking at the service fee...").
@@ -165,12 +166,13 @@ const SuccessApp = () => {
 
         USER CONTEXT:
         - The user is currently looking at the: "${confusion?.zoneId}" section.
-        - Our eye-tracker detected confusion.
+        - Our eye-tracker detected hesitation due to: "${confusion?.reason || 'Prolonged focus'}".
+        - This means they might be confused or calculating.
 
         KNOWLEDGE BASE:
         1. Terms of Service: I agree to the Terms of Service, including the non-refundable processing fee of $${totals.serviceFee.toFixed(2)}, an estimated 10% tax rate, and automated subscription renewal.
         2. Price Summary: Subtotal: $${totals.subtotal.toFixed(2)}, Service Fee: $${totals.serviceFee.toFixed(2)}, Tax (10%): $${totals.tax.toFixed(2)}. Total: $${totals.total.toFixed(2)}.
-        3. Cart Items: ${cart.map(i => `${i.name} (Qty: ${i.quantity})`).join(", ")}.
+        3. Cart Items: ${cart.map(i => `${i.name} - $${i.price} (Qty: ${i.quantity})`).join(", ")}.
 
         YOUR GOAL:
         - Acknowledge what they are looking at (e.g., "I noticed you're looking at the service fee...").
@@ -233,10 +235,10 @@ const SuccessApp = () => {
                 <div className="absolute inset-0 bg-black/10" />
             </div>
 
-            <div className={`relative z-10 w-full h-full transition-all duration-500 overflow-y-auto ${needHelp ? 'pr-0 sm:pr-[35%] lg:pr-[28%]' : ''}`}>
-                <div className="min-h-screen w-full flex flex-col items-center justify-center p-4 md:p-8">
+            <div className={`relative z-10 w-full h-full transition-all duration-500 overflow-hidden ${needHelp ? 'pr-0 sm:pr-[35%] lg:pr-[28%]' : ''}`}>
+                <div className="h-full w-full flex flex-col items-center justify-center p-4">
 
-                    <div className="mb-8 text-center bg-white/10  p-6 rounded-3xl shadow-xl border border-white/50 w-full max-w-4xl transform hover:scale-[1.01] transition-transform flex justify-between items-center text-black">
+                    <div className="mb-4 text-center bg-white/10  p-4 rounded-3xl shadow-xl border border-white/50 w-full max-w-4xl transform hover:scale-[1.01] transition-transform flex justify-between items-center text-black">
                         <button onClick={handleBack} className="text-xs font-black uppercase tracking-[0.2em] text-gray-500 hover:text-blue-600 transition-colors">
                             ← Back to Store
                         </button>

@@ -45,7 +45,7 @@ const CheckoutForm = ({ onZonesReady, confusion, onPay, onBack, cart = [], total
     <div className="relative text-black bg-transparent text-black rounded-[2.3rem] shadow-2xl overflow-hidden border border-gray-100">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-0">
 
-        <div className="p-10 space-y-8 border-r border-gray-100">
+        <div className="p-6 space-y-4 border-r border-gray-100">
           <header className="flex justify-between items-start">
             <div className="text-right">
               <h2 className="text-3xl font-black tracking-tighter italic uppercase text-gray-900 leading-none">Payment</h2>
@@ -56,22 +56,22 @@ const CheckoutForm = ({ onZonesReady, confusion, onPay, onBack, cart = [], total
           <div className="space-y-4">
             <div className="space-y-1">
               <label className="text-[10px] font-bold text-black uppercase tracking-widest ml-1">Cardholder Name</label>
-              <input type="text" placeholder="JOHN DOE" className="w-full p-4 bg-gray-50 border border-gray-100 rounded-2xl focus:ring-2 focus:ring-blue-600 outline-none font-bold text-sm placeholder:text-gray-200 transition-all" />
+              <input type="text" placeholder="JOHN DOE" className="w-full p-3 bg-gray-50 border border-gray-100 rounded-2xl focus:ring-2 focus:ring-blue-600 outline-none font-bold text-sm placeholder:text-gray-200 transition-all" />
             </div>
 
             <div className="space-y-1">
               <label className="text-[10px] font-bold text-black uppercase tracking-widest ml-1">Card Number</label>
-              <input type="text" placeholder="0000 0000 0000 0000" className="w-full p-4 bg-gray-50 border border-gray-100 rounded-2xl focus:ring-2 focus:ring-blue-600 outline-none font-bold text-sm placeholder:text-gray-200 transition-all" />
+              <input type="text" placeholder="0000 0000 0000 0000" className="w-full p-3 bg-gray-50 border border-gray-100 rounded-2xl focus:ring-2 focus:ring-blue-600 outline-none font-bold text-sm placeholder:text-gray-200 transition-all" />
             </div>
 
             <div className="flex gap-4">
               <div className="w-1/2 space-y-1">
                 <label className="text-[10px] font-bold text-black uppercase tracking-widest ml-1">Expiry</label>
-                <input type="text" placeholder="MM/YY" className="w-full p-4 bg-gray-50 border border-gray-100 rounded-2xl focus:ring-2 focus:ring-blue-600 outline-none font-bold text-sm" />
+                <input type="text" placeholder="MM/YY" className="w-full p-3 bg-gray-50 border border-gray-100 rounded-2xl focus:ring-2 focus:ring-blue-600 outline-none font-bold text-sm" />
               </div>
               <div className="w-1/2 space-y-1">
                 <label className="text-[10px] font-bold text-black uppercase tracking-widest ml-1">CVC</label>
-                <input type="text" placeholder="123" className="w-full p-4 bg-gray-50 border border-gray-100 rounded-2xl focus:ring-2 focus:ring-blue-600 outline-none font-bold text-sm" />
+                <input type="text" placeholder="123" className="w-full p-3 bg-gray-50 border border-gray-100 rounded-2xl focus:ring-2 focus:ring-blue-600 outline-none font-bold text-sm" />
               </div>
             </div>
           </div>
@@ -97,7 +97,7 @@ const CheckoutForm = ({ onZonesReady, confusion, onPay, onBack, cart = [], total
           </div>
         </div>
 
-        <div className="bg-gray-50/50 p-10 flex flex-col justify-between rounded-r-[2.3rem]">
+        <div className="bg-gray-50/50 p-6 flex flex-col justify-between rounded-r-[2.3rem]">
           <div className="space-y-10">
             <div className="flex justify-between items-center">
               <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-400">Order Summary</h3>
@@ -152,7 +152,7 @@ const CheckoutForm = ({ onZonesReady, confusion, onPay, onBack, cart = [], total
             </div>
           </div>
 
-          <div className="mt-12">
+          <div className="mt-6">
             <button
               onClick={(e) => {
                 e.preventDefault();
@@ -160,7 +160,7 @@ const CheckoutForm = ({ onZonesReady, confusion, onPay, onBack, cart = [], total
               }}
               ref={payRef}
               id="pay-button"
-              className={`w-full py-6 bg-blue-600 text-white font-black text-xs uppercase tracking-[0.3em] rounded-2xl shadow-xl shadow-blue-200 hover:bg-black transition-all transform active:scale-[0.98] ${getHighlightClass('pay-button')}`}
+              className={`w-full py-4 bg-blue-600 text-white font-black text-xs uppercase tracking-[0.3em] rounded-2xl shadow-xl shadow-blue-200 hover:bg-black transition-all transform active:scale-[0.98] ${getHighlightClass('pay-button')}`}
             >
               Complete Order Transaction
             </button>
