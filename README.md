@@ -1,9 +1,5 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-## Getting Started
-
-
-First, run the development server:
 ### The shop
 <img width="1900" height="1079" alt="image" src="https://github.com/user-attachments/assets/487240d7-d788-454c-bdb8-8407e87657dc" />
 
@@ -24,6 +20,10 @@ First, run the development server:
 
 
 
+## Getting Started
+
+
+First, run the development server:
 
 ```bash
 npm run dev
